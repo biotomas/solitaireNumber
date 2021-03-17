@@ -13,7 +13,7 @@ class SolitaireNumberTest {
 		SolitaireNumberSolver sn = new SolitaireNumberSolver();
 		SolitaireExecutionPlan ep = new SolitaireExecutionPlan();
 		ep.input = input;
-		return sn.findSolitaireNumberWithMap(ep);
+		return sn.findSolitaireNumberLinear(ep);
 	}
 
 	@Test

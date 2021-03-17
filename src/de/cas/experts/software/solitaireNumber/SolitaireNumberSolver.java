@@ -51,7 +51,7 @@ public class SolitaireNumberSolver {
 	 * This is linear solution and performs much better than the solution above, but still can improved.
 	 */
 	@Benchmark
-	public int findSolitaireNumberWithMap(SolitaireExecutionPlan ep) {
+	public int findSolitaireNumberLinear(SolitaireExecutionPlan ep) {
 		List<Integer> numbers = readIntegersWithScanner(ep.input);
 		Map<Integer, Integer> occurrences = new HashMap<>();
 		for (int number : numbers) {
