@@ -16,11 +16,8 @@ import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.Warmup;
 
-import de.cas.experts.software.Stopwatch;
-import de.cas.experts.software.TimeLimitExceededException;
-
-@Warmup(iterations = 2, time = 100, timeUnit = TimeUnit.MILLISECONDS)
-@Measurement(iterations = 3, time = 100, timeUnit = TimeUnit.MILLISECONDS)
+@Warmup(iterations = 3, time = 100, timeUnit = TimeUnit.MILLISECONDS)
+@Measurement(iterations = 10, time = 100, timeUnit = TimeUnit.MILLISECONDS)
 @Fork(value = 1, warmups = 1)
 @BenchmarkMode(Mode.AverageTime)
 public class SolitaireNumberSolver {
@@ -28,20 +25,15 @@ public class SolitaireNumberSolver {
 	/**
 	 * This is a lazy inefficient solution, but short code and easy to read. Because
 	 * of linear time required by the frequency method this algorithm is quadratic.
-	 * 
-	 * We do not even need to run the sampler on this, just move on the next (linear
-	 * time) solution
+	 *
+	 * This method is just to illustrate a simple solution, it is so slow, that we do
+	 * not even want to include it in the benchmarking
 	 */
-	@Benchmark
 	public int findSolitaireNumber(SolitaireExecutionPlan ep) {
-		Stopwatch watch = new Stopwatch();
 		List<Integer> numbers = readIntegersWithScanner(ep.input);
 		for (int number : numbers) {
 			if (frequency(numbers, number) == 1) {
 				return number;
-			}
-			if (watch.elapsedSeconds(1)) {
-				throw new TimeLimitExceededException();
 			}
 		}
 		throw new IllegalArgumentException();
@@ -49,6 +41,7 @@ public class SolitaireNumberSolver {
 
 	/**
 	 * This is linear solution and performs much better than the solution above, but still can improved.
+	 * Use this as your staring point. It can be made at least 40 times faster.
 	 */
 	@Benchmark
 	public int findSolitaireNumberLinear(SolitaireExecutionPlan ep) {
@@ -69,27 +62,6 @@ public class SolitaireNumberSolver {
 			}
 		}
 		throw new IllegalArgumentException();
-	}
-
-	@Benchmark
-	public int findSolitaireNumberUltimate(SolitaireExecutionPlan ep) {
-		int solitaire = 0;
-		int value = 0;
-		boolean negative = false;
-		for (int index = 0; index < ep.input.length(); index++) {
-			int character = ep.input.charAt(index);
-			if (character == '-') {
-				negative = true;
-			} else if (character == ' ') {
-				solitaire ^= negative ? -value : value;
-				value = 0;
-				negative = false;
-			} else {
-				value = (value * 10) + (character - '0');
-			}
-		}
-		solitaire ^= negative ? -value : value;
-		return solitaire;
 	}
 
 	private List<Integer> readIntegersWithScanner(String input) {
