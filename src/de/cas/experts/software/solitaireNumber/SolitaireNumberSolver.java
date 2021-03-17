@@ -40,8 +40,9 @@ public class SolitaireNumberSolver {
 	}
 
 	/**
-	 * This is linear solution and performs much better than the solution above, but still can improved.
-	 * Use this as your staring point. It can be made at least 40 times faster.
+	 * This is a linear time solution and performs much better than the solution above.
+	 * Use this as the staring point to benchmark your solution. It can be made at least 40 times faster.
+	 * Run BechnmarkRunner to evaluate and compare various solutions.
 	 */
 	@Benchmark
 	public int findSolitaireNumberLinear(SolitaireExecutionPlan ep) {
@@ -64,6 +65,16 @@ public class SolitaireNumberSolver {
 		throw new IllegalArgumentException();
 	}
 
+	/**
+	 * TODO implement your a super fast solver here.
+	 * You can modify and use SolitaireNumberTest to check the correctness of your implementation.
+	 */
+	@Benchmark
+	public int findSolitaireNumberSuperFast(SolitaireExecutionPlan ep) {
+		return 0;
+	}
+
+	
 	private List<Integer> readIntegersWithScanner(String input) {
 		Scanner scanner = new Scanner(input);
 		List<Integer> numbers = new ArrayList<>();
